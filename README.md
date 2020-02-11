@@ -7,6 +7,7 @@ TaskMaster application is an Andriod mobile product that allows users to create 
 
 ## Change log
 Created Activities:
+
     - MainActivity:  User lands on this activity.  Activity contains buttons to navigate to the add and all activities.  
     
     - AddTaskActivity:  User is able to add a task.  
