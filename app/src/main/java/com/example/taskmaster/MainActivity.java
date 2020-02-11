@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                Intent goToAddTaskActivity = new Intent(MainActivity.this, addTask.class);
+                Intent goToAddTaskActivity = new Intent(MainActivity.this, AddTaskActivity.class);
                 MainActivity.this.startActivity(goToAddTaskActivity);
             }
         });
@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                Intent goToAllTaskActivity = new Intent(MainActivity.this, allTasks.class);
+                Intent goToAllTaskActivity = new Intent(MainActivity.this, AllTasksActivity.class);
                 MainActivity.this.startActivity(goToAllTaskActivity);
             }
         });
