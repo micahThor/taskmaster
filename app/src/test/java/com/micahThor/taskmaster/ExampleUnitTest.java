@@ -1,4 +1,4 @@
-package com.example.taskmaster;
+package com.micahThor.taskmaster;
 
 import org.junit.Test;
 
