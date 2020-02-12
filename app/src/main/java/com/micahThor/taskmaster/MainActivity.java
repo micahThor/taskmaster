@@ -96,8 +96,8 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = sharedPrefers.edit();
         editor.putString("taskTitle", title);
         editor.commit();
-        Intent goToAllTaskActivity = new Intent(MainActivity.this, TaskDetailActivity.class);
-        MainActivity.this.startActivity(goToAllTaskActivity);
+        Intent goToDetailActivity = new Intent(MainActivity.this, TaskDetailActivity.class);
+        MainActivity.this.startActivity(goToDetailActivity);
     }
 
     @Override
