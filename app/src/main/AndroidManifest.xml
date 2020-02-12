@@ -9,9 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.micahThor.taskmaster.AddTaskActivity"></activity>
-        <activity android:name="com.micahThor.taskmaster.AllTasksActivity" />
-        <activity android:name="com.micahThor.taskmaster.MainActivity">
+        <activity android:name=".SettingsActivity"></activity>
+        <activity android:name=".TaskDetailActivity" />
+        <activity android:name=".AddTaskActivity" />
+        <activity android:name=".AllTasksActivity" />
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
