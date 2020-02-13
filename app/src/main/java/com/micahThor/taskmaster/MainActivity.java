@@ -52,41 +52,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        /*
-                THREE HARD-CODED TASK BUTTONS
-         */
-        final Button washDishesButton = findViewById(R.id.task1Button);
-        washDishesButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                // get text of button to pass into shared preferences
-                String taskTitle = washDishesButton.getText().toString();
-                saveTitleToSharedPrefs(taskTitle);
-            }
-        });
-
-        final Button walkMolly = findViewById(R.id.task2Button);
-        walkMolly.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                // get text of button to pass into shared preferences
-                String taskTitle = walkMolly.getText().toString();
-                saveTitleToSharedPrefs(taskTitle);
-            }
-        });
-
-        final Button buyFlowers = findViewById(R.id.task3Button);
-        buyFlowers.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                // get text of button to pass into shared preferences
-                String taskTitle = buyFlowers.getText().toString();
-                saveTitleToSharedPrefs(taskTitle);
-            }
-        });
 
     }
 

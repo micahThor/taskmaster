@@ -20,12 +20,12 @@ public class TaskDetailActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        // retrieve task title from shared prefs
-        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        String taskTitle = sharedPrefs.getString("taskTitle", "Task Details");
+        // retrieve task title from Intent
+        String headerText = getIntent().getStringExtra("title");
+
 
         // get header obj and set text
         TextView taskHeader = findViewById(R.id.taskHeaderTextView);
-        taskHeader.setText(taskTitle);
+        taskHeader.setText(headerText);
     }
 }
