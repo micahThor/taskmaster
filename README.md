@@ -32,3 +32,24 @@ Created Activities:
     - TaskDetailsActivity: User can navigate to a task from home page and view details about task.
 
 ![Home Page of TaskMaster App](https://github.com/micahThor/taskmaster/blob/master/screenshots/Home%20page%20lab%2027.png)
+
+
+---
+
+# Lab 28 - 13 FEB 2020
+
+## Description
+Refactor your homepage to use a RecyclerView for displaying Task data. This should have hardcoded Task data for now.
+
+Some steps you will likely want to take to accomplish this:
+
+Create a ViewAdapter class that displays data from a list of Tasks.
+In your MainActivity, create at least three hardcoded Task instances and use those to populate your RecyclerView/ViewAdapter.
+Ensure that you can tap on any one of the Tasks in the RecyclerView, and it will appropriately launch the detail page with the correct Task title displayed.
+
+## Change log
+    - Created Task class.
+    - Created fragment for Task class.
+    - Created adapters to handle fragments
+
+![Home Page of TaskMaster App](https://github.com/micahThor/taskmaster/blob/master/screenshots/Home%20page%20lab%2028.png)
