@@ -1,6 +1,9 @@
 package com.micahThor.taskmaster;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,13 +14,24 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
+
+    List<Task> taskList;
+    TaskDatabase taskDb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        taskDb = Room.databaseBuilder(getApplicationContext(), TaskDatabase.class, "tasks").allowMainThreadQueries().build();
+        taskList = taskDb.taskDao().getAllTasks();
+
+        RecyclerView recyclerView = findViewById(R.id.taskFragment);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(new MyTaskRecyclerViewAdapter(this.taskList, null));
 
         // wire up ADD TASKS BUTTON
         Button goToAddTasksButton = findViewById(R.id.goToTaskActivityButton);
@@ -53,17 +67,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-
-    }
-
-    private void saveTitleToSharedPrefs(String title) {
-
-        SharedPreferences sharedPrefers = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        SharedPreferences.Editor editor = sharedPrefers.edit();
-        editor.putString("taskTitle", title);
-        editor.commit();
-        Intent goToDetailActivity = new Intent(MainActivity.this, TaskDetailActivity.class);
-        MainActivity.this.startActivity(goToDetailActivity);
     }
 
     @Override
