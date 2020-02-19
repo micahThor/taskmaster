@@ -22,12 +22,12 @@
         android:id="@+id/taskTextInput"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="52dp"
         android:ems="10"
         android:hint="My Task"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.2"
+        app:layout_constraintHorizontal_bias="0.202"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/addTaskHeading" />
 
@@ -48,25 +48,61 @@
         android:id="@+id/addATaskButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="30dp"
         android:text="Add Task"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.15"
+        app:layout_constraintHorizontal_bias="0.2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/taskDescriptionInput" />
+        app:layout_constraintTop_toBottomOf="@+id/taskStateRadioGroup" />
 
     <TextView
         android:id="@+id/totalTaskCountTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:text="Total tasks: 0"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.15"
+        app:layout_constraintHorizontal_bias="0.8"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/addATaskButton"
-        app:layout_constraintVertical_bias="0.100000024" />
+        app:layout_constraintVertical_bias="0.0" />
+
+    <RadioGroup
+        android:id="@+id/taskStateRadioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/taskDescriptionInput">
+
+        <RadioButton
+            android:id="@+id/taskNewRadioButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="New" />
+
+        <RadioButton
+            android:id="@+id/taskAssignedRadioButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Assigned" />
+
+        <RadioButton
+            android:id="@+id/taskProgressRadioButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="In Progress" />
+
+        <RadioButton
+            android:id="@+id/taskCompleteradioButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Complete" />
+    </RadioGroup>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -40,6 +40,7 @@ public class MyTaskRecyclerViewAdapter extends RecyclerView.Adapter<MyTaskRecycl
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
         holder.mTitleView.setText(mValues.get(position).getTitle());
+        holder.mDescriptionView.setText(mValues.get(position).getBody());
         holder.mStateView.setText(mValues.get(position).getState());
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
@@ -48,6 +49,8 @@ public class MyTaskRecyclerViewAdapter extends RecyclerView.Adapter<MyTaskRecycl
                 Context context = v.getContext();
                 Intent intent = new Intent(context, TaskDetailActivity.class);
                 intent.putExtra("title", holder.mTitleView.getText().toString());
+                intent.putExtra("description", holder.mDescriptionView.getText().toString());
+                intent.putExtra("state", holder.mStateView.getText().toString());
                 context.startActivity(intent);
             }
         });
@@ -61,6 +64,7 @@ public class MyTaskRecyclerViewAdapter extends RecyclerView.Adapter<MyTaskRecycl
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
         public final TextView mTitleView;
+        public final TextView mDescriptionView;
         public final TextView mStateView;
         public Task mItem;
 
@@ -68,6 +72,7 @@ public class MyTaskRecyclerViewAdapter extends RecyclerView.Adapter<MyTaskRecycl
             super(view);
             mView = view;
             mTitleView = (TextView) view.findViewById(R.id.taskTitle);
+            mDescriptionView = (TextView) view.findViewById(R.id.taskDescription);
             mStateView = (TextView) view.findViewById(R.id.taskState);
         }
 
@@ -76,4 +81,5 @@ public class MyTaskRecyclerViewAdapter extends RecyclerView.Adapter<MyTaskRecycl
             return super.toString() + " '" + mTitleView.getText() + "'";
         }
     }
+
 }

@@ -18,14 +18,23 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/taskDescriptionEditText"
         android:layout_width="310dp"
         android:layout_height="361dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="32dp"
         android:ems="10"
         android:gravity="start|top"
         android:inputType="textMultiLine"
-        android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-        app:layout_constraintTop_toBottomOf="@+id/taskHeaderTextView"
+        app:layout_constraintTop_toBottomOf="@+id/stateTextView"
         tools:layout_editor_absoluteX="50dp" />
+
+    <TextView
+        android:id="@+id/stateTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="17dp"
+        android:layout_marginTop="50dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/taskHeaderTextView" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,20 +2,15 @@ package com.micahThor.taskmaster;
 
 import android.content.Context;
 import android.os.Bundle;
-
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.micahThor.taskmaster.R;
-import com.micahThor.taskmaster.dummy.DummyContent;
-import com.micahThor.taskmaster.dummy.DummyContent.DummyItem;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +21,7 @@ import java.util.List;
  * interface.
  */
 public class TaskFragment extends Fragment {
+
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
@@ -38,6 +34,7 @@ public class TaskFragment extends Fragment {
      * fragment (e.g. upon screen orientation changes).
      */
     public TaskFragment() {
+
     }
 
     // TODO: Customize parameter initialization
@@ -74,10 +71,7 @@ public class TaskFragment extends Fragment {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
             List<Task> taskList = new ArrayList<Task>();
-            taskList.add(new Task("Title1", "Body1", "State1"));
-            taskList.add(new Task("Title2", "Body2", "State2"));
-            taskList.add(new Task("Title3", "Body3", "State3"));
-            taskList.add(new Task("Title4", "Body4", "State4"));
+
             recyclerView.setAdapter(new MyTaskRecyclerViewAdapter(taskList, mListener));
         }
         return view;
@@ -110,6 +104,6 @@ public class TaskFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(DummyItem item);
+        void onListFragmentInteraction(Task item);
     }
 }

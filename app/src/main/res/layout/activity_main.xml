@@ -29,7 +29,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.8"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragment3" />
+        app:layout_constraintTop_toBottomOf="@+id/taskFragment" />
 
     <Button
         android:id="@+id/allTasksButton"
@@ -41,7 +41,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragment3" />
+        app:layout_constraintTop_toBottomOf="@+id/taskFragment" />
 
     <ImageButton
         android:id="@+id/settingsButton"
@@ -64,7 +64,7 @@
         app:layout_constraintTop_toBottomOf="@+id/myTasksHeader" />
 
     <fragment
-        android:id="@+id/fragment3"
+        android:id="@+id/taskFragment"
         android:name="com.micahThor.taskmaster.TaskFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
