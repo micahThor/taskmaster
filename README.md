@@ -75,6 +75,6 @@ Ensure that you can tap on any one of the Tasks in the RecyclerView, and it will
 ## Change log
     - Created Database to store Task objects.
 
-![Home Page of TaskMaster App](https://github.com/micahThor/taskmaster/blob/master/screenshots/Home%20page%20lab%2028.png)
+![Home Page of TaskMaster App](https://github.com/micahThor/taskmaster/blob/master/screenshots/Home%20page%20lab%2032.png)
 
 
