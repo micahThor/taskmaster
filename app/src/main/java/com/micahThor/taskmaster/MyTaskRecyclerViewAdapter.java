@@ -1,17 +1,19 @@
 package com.micahThor.taskmaster;
 
+
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.micahThor.taskmaster.TaskFragment.OnListFragmentInteractionListener;
-
-
 import java.util.List;
 
 /**
@@ -47,11 +49,19 @@ public class MyTaskRecyclerViewAdapter extends RecyclerView.Adapter<MyTaskRecycl
             @Override
             public void onClick(View v) {
                 Context context = v.getContext();
-                Intent intent = new Intent(context, TaskDetailActivity.class);
-                intent.putExtra("title", holder.mTitleView.getText().toString());
-                intent.putExtra("description", holder.mDescriptionView.getText().toString());
-                intent.putExtra("state", holder.mStateView.getText().toString());
-                context.startActivity(intent);
+
+                String activityName = context.getClass().getName();
+
+                if (activityName.equals("com.micahThor.taskmaster.MainActivity")) {
+                    Intent intent = new Intent(context, TaskDetailActivity.class);
+                    intent.putExtra("title", holder.mTitleView.getText().toString());
+                    intent.putExtra("description", holder.mDescriptionView.getText().toString());
+                    intent.putExtra("state", holder.mStateView.getText().toString());
+                    context.startActivity(intent);
+                } else if (activityName.equals("com.micahThor.taskmaster.AllTasksActivity")) {
+                    String description = holder.mDescriptionView.getText().toString();
+                    Toast.makeText(context, description, Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
