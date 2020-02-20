@@ -78,3 +78,16 @@ Ensure that you can tap on any one of the Tasks in the RecyclerView, and it will
 ![Home Page of TaskMaster App](https://github.com/micahThor/taskmaster/blob/master/screenshots/Home%20page%20lab%2032.png)
 
 
+---
+
+# Lab 33 - 20 FEB 2020
+
+## Description
+- Today, your app will add a new activity for all tasks with a Recycler View showing all tasks. These tasks must be clickable. When clicked on, trigger a Toast that displays details about the task.
+
+## Change log
+    - Added functionality to the all tasks activity.  Now all the saved tasks in the database appear on the screen.  Every activity is tappable.  When tapped, a toast appears with details about the task.
+
+![All Tasks Page of TaskMaster App](https://github.com/micahThor/taskmaster/blob/master/screenshots/Home%20page%20lab%2033.png)
+
+
