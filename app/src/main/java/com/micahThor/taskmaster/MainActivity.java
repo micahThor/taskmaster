@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MyTaskRecyclerViewAdapter.taskOnClickListener {
 
     List<Task> taskList;
     TaskDatabase taskDb;
@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
         RecyclerView recyclerView = findViewById(R.id.taskFragment);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(new MyTaskRecyclerViewAdapter(this.taskList, null));
+        recyclerView.setAdapter(new MyTaskRecyclerViewAdapter(this.taskList, null, this));
 
         // wire up ADD TASKS BUTTON
         Button goToAddTasksButton = findViewById(R.id.goToTaskActivityButton);
@@ -78,5 +78,14 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         String userName = sharedPrefs.getString("userName", "User Name");
         userNameTextView.setText(userName + "'s Tasks");
+    }
+
+    @Override
+    public void onClick(Task t) {
+        Intent intent = new Intent(getApplicationContext(), TaskDetailActivity.class);
+        intent.putExtra("title", t.getTitle());
+        intent.putExtra("description", t.getBody());
+        intent.putExtra("state", t.getState());
+        this.startActivity(intent);
     }
 }

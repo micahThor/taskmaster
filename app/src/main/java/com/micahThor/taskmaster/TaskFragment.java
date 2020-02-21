@@ -70,9 +70,6 @@ public class TaskFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            List<Task> taskList = new ArrayList<Task>();
-
-            recyclerView.setAdapter(new MyTaskRecyclerViewAdapter(taskList, mListener));
         }
         return view;
     }
@@ -106,4 +103,5 @@ public class TaskFragment extends Fragment {
         // TODO: Update argument type and name
         void onListFragmentInteraction(Task item);
     }
+
 }

@@ -25,10 +25,12 @@ public class MyTaskRecyclerViewAdapter extends RecyclerView.Adapter<MyTaskRecycl
 
     private final List<Task> mValues;
     private final OnListFragmentInteractionListener mListener;
+    private final taskOnClickListener clickListener;
 
-    public MyTaskRecyclerViewAdapter(List<Task> items, OnListFragmentInteractionListener listener) {
+    public MyTaskRecyclerViewAdapter(List<Task> items, OnListFragmentInteractionListener listener, taskOnClickListener clickListener) {
         mValues = items;
         mListener = listener;
+        this.clickListener = clickListener;
     }
 
     @Override
@@ -50,18 +52,12 @@ public class MyTaskRecyclerViewAdapter extends RecyclerView.Adapter<MyTaskRecycl
             public void onClick(View v) {
                 Context context = v.getContext();
 
-                String activityName = context.getClass().getName();
+                String title = holder.mTitleView.getText().toString();
+                String description = holder.mDescriptionView.getText().toString();
+                String state = holder.mStateView.getText().toString();
+                Task t = new Task(title, description, state);
 
-                if (activityName.equals("com.micahThor.taskmaster.MainActivity")) {
-                    Intent intent = new Intent(context, TaskDetailActivity.class);
-                    intent.putExtra("title", holder.mTitleView.getText().toString());
-                    intent.putExtra("description", holder.mDescriptionView.getText().toString());
-                    intent.putExtra("state", holder.mStateView.getText().toString());
-                    context.startActivity(intent);
-                } else if (activityName.equals("com.micahThor.taskmaster.AllTasksActivity")) {
-                    String description = holder.mDescriptionView.getText().toString();
-                    Toast.makeText(context, description, Toast.LENGTH_SHORT).show();
-                }
+                clickListener.onClick(t);
             }
         });
     }
@@ -90,6 +86,10 @@ public class MyTaskRecyclerViewAdapter extends RecyclerView.Adapter<MyTaskRecycl
         public String toString() {
             return super.toString() + " '" + mTitleView.getText() + "'";
         }
+    }
+
+    public static interface taskOnClickListener {
+        public void onClick(Task t);
     }
 
 }
