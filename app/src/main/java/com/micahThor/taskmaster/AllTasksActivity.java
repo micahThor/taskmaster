@@ -10,7 +10,7 @@ import android.widget.Toast;
 
 import java.util.List;
 
-public class AllTasksActivity extends AppCompatActivity {
+public class AllTasksActivity extends AppCompatActivity implements MyTaskRecyclerViewAdapter.taskOnClickListener {
 
     List<Task> taskList;
     TaskDatabase taskDb;
@@ -25,7 +25,11 @@ public class AllTasksActivity extends AppCompatActivity {
 
         RecyclerView recyclerView = findViewById(R.id.taskFragment);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(new MyTaskRecyclerViewAdapter(this.taskList, null));
+        recyclerView.setAdapter(new MyTaskRecyclerViewAdapter(this.taskList, null, this));
     }
 
+    @Override
+    public void onClick(Task t) { ;
+        Toast.makeText(getApplicationContext(), t.getBody(), Toast.LENGTH_SHORT).show();
+    }
 }
