@@ -37,7 +37,7 @@ public class AddTaskActivity extends AppCompatActivity {
                 .awsConfiguration(new AWSConfiguration(getApplicationContext()))
                 .build();
 
-        taskDb = Room.databaseBuilder(getApplicationContext(), TaskDatabase.class, "tasks").allowMainThreadQueries().build();
+        //taskDb = Room.databaseBuilder(getApplicationContext(), TaskDatabase.class, "tasks").allowMainThreadQueries().build();
 
         // wire up ADD TASK button
         Button addTaskButton = findViewById(R.id.addATaskButton);
@@ -46,25 +46,24 @@ public class AddTaskActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-//                // get task title
-//                EditText titleTextEdit = findViewById(R.id.taskTextInput);
-//                String taskTitle = titleTextEdit.getText().toString();
-//
-//                // get task description
-//                EditText descriptionTextEdit = findViewById(R.id.taskDescriptionInput);
-//                String taskDescription = descriptionTextEdit.getText().toString();
-//
-//                // get task state
-//                RadioGroup stateRadioGroup  = findViewById(R.id.taskStateRadioGroup);
-//                int checkedState = stateRadioGroup.getCheckedRadioButtonId();
-//                RadioButton selectedStateButton = findViewById(checkedState);
-//                String taskState = selectedStateButton.getText().toString();
+                // get task title
+                EditText titleTextEdit = findViewById(R.id.taskTextInput);
+                String taskTitle = titleTextEdit.getText().toString();
 
-                runTaskCreateMutation();
+                // get task description
+                EditText descriptionTextEdit = findViewById(R.id.taskDescriptionInput);
+                String taskDescription = descriptionTextEdit.getText().toString();
+
+                // get task state
+                RadioGroup stateRadioGroup  = findViewById(R.id.taskStateRadioGroup);
+                int checkedState = stateRadioGroup.getCheckedRadioButtonId();
+                RadioButton selectedStateButton = findViewById(checkedState);
+                String taskState = selectedStateButton.getText().toString();
+
+                runTaskCreateMutation(taskTitle, taskDescription, taskState);
                 //taskDb.taskDao().saveTask(new Task(taskTitle, taskDescription, taskState));
+
 //
-                Intent goToMainActivity = new Intent(AddTaskActivity.this, MainActivity.class);
-                AddTaskActivity.this.startActivity(goToMainActivity);
 
             }
         });
@@ -75,17 +74,16 @@ public class AddTaskActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        taskList = taskDb.taskDao().getAllTasks();
-        TextView taskCounter= findViewById(R.id.totalTaskCountTextView);
-        taskCounter.setText("Total tasks: " + taskList.size());
-
+//        taskList = taskDb.taskDao().getAllTasks();
+//        TextView taskCounter= findViewById(R.id.totalTaskCountTextView);
+//        taskCounter.setText("Total tasks: " + taskList.size());
     }
 
-    public void runTaskCreateMutation() {
+    public void runTaskCreateMutation(String taskTitle, String taskBody, String taskState) {
         CreateTaskInput taskInput = CreateTaskInput.builder()
-                .title("testinput")
-                .body("testinput")
-                .state("testinput")
+                .title(taskTitle)
+                .body(taskBody)
+                .state(taskState)
                 .build();
 
         mAWSAppSyncClient.mutate(CreateTaskMutation.builder().input(taskInput).build())
