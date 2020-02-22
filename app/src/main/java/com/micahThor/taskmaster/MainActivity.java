@@ -16,12 +16,15 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.amazonaws.amplify.generated.graphql.CreateTaskMutation;
+import com.amazonaws.amplify.generated.graphql.ListTasksQuery;
 import com.amazonaws.mobile.config.AWSConfiguration;
 import com.amazonaws.mobileconnectors.appsync.AWSAppSyncClient;
+import com.amazonaws.mobileconnectors.appsync.fetcher.AppSyncResponseFetchers;
 import com.apollographql.apollo.GraphQLCall;
 import com.apollographql.apollo.api.Response;
 import com.apollographql.apollo.exception.ApolloException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Nonnull;
@@ -44,9 +47,11 @@ public class MainActivity extends AppCompatActivity implements MyTaskRecyclerVie
                 .context(getApplicationContext())
                 .awsConfiguration(new AWSConfiguration(getApplicationContext()))
                 .build();
+        this.taskList = new ArrayList<Task>();
+        runQuery();
 
-        taskDb = Room.databaseBuilder(getApplicationContext(), TaskDatabase.class, "tasks").allowMainThreadQueries().build();
-        taskList = taskDb.taskDao().getAllTasks();
+        //taskDb = Room.databaseBuilder(getApplicationContext(), TaskDatabase.class, "tasks").allowMainThreadQueries().build();
+        //taskList = taskDb.taskDao().getAllTasks();
 
         RecyclerView recyclerView = findViewById(R.id.taskFragment);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -88,6 +93,7 @@ public class MainActivity extends AppCompatActivity implements MyTaskRecyclerVie
 
     }
 
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -97,6 +103,12 @@ public class MainActivity extends AppCompatActivity implements MyTaskRecyclerVie
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         String userName = sharedPrefs.getString("userName", "User Name");
         userNameTextView.setText(userName + "'s Tasks");
+
+
+        runQuery();
+        RecyclerView recyclerView = findViewById(R.id.taskFragment);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(new MyTaskRecyclerViewAdapter(this.taskList, null, this));
     }
 
     @Override
@@ -108,27 +120,34 @@ public class MainActivity extends AppCompatActivity implements MyTaskRecyclerVie
         this.startActivity(intent);
     }
 
-//    public void runTaskCreatMutation() {
-//        CreateTaskInput taskInput = CreateTaskInput.builder()
-//                .title("testinput")
-//                .body("testinput")
-//                .state("testinput")
-//                .build();
-//        mAWSAppSyncClient.mutate(CreateTaskMutation.builder().input(taskInput).build())
-//                .enqueue(addMutationCallback);
-//    }
-//
-//    private GraphQLCall.Callback<CreateTaskMutation.Data> addMutationCallback = new GraphQLCall.Callback<CreateTaskMutation.Data>() {
-//        @Override
-//        public void onResponse(@Nonnull Response<CreateTaskMutation.Data> response) {
-//            Log.i("Results", "Added task");
-//        }
-//
-//        @Override
-//        public void onFailure(@Nonnull ApolloException e) {
-//            Log.e("Error", e.toString());
-//        }
-//    };
+    public void runQuery(){
+        mAWSAppSyncClient.query(ListTasksQuery.builder().build())
+                .responseFetcher(AppSyncResponseFetchers.CACHE_AND_NETWORK)
+                .enqueue(tasksCallback);
+    }
+
+    private GraphQLCall.Callback<ListTasksQuery.Data> tasksCallback = new GraphQLCall.Callback<ListTasksQuery.Data>() {
+        @Override
+        public void onResponse(@Nonnull Response<ListTasksQuery.Data> response) {
+            if(taskList.size() == 0 || response.data().listTasks().items().size() != taskList.size()) {
+
+                taskList.clear();
+
+                for (ListTasksQuery.Item item : response.data().listTasks().items()) {
+                    Task t = new Task(item.title(), item.body(), item.state());
+                    taskList.add(t);
+                }
+            }
+
+
+            Log.i("Results", response.data().listTasks().items().toString());
+        }
+
+        @Override
+        public void onFailure(@Nonnull ApolloException e) {
+            Log.e("ERROR", e.toString());
+        }
+    };
 
 
 }
