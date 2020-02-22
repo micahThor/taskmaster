@@ -43,22 +43,13 @@ public class MainActivity extends AppCompatActivity implements MyTaskRecyclerVie
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mAWSAppSyncClient = AWSAppSyncClient.builder()
-                .context(getApplicationContext())
-                .awsConfiguration(new AWSConfiguration(getApplicationContext()))
-                .build();
-        this.taskList = new ArrayList<Task>();
-        runQuery();
-
-        //taskDb = Room.databaseBuilder(getApplicationContext(), TaskDatabase.class, "tasks").allowMainThreadQueries().build();
-        //taskList = taskDb.taskDao().getAllTasks();
-
-        RecyclerView recyclerView = findViewById(R.id.taskFragment);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(new MyTaskRecyclerViewAdapter(this.taskList, null, this));
+        // PAGE ELEMENTS
+        final RecyclerView recyclerView = findViewById(R.id.taskFragment);
+        final Button goToAddTasksButton = findViewById(R.id.goToTaskActivityButton);
+        final Button goToAllTasksButton = findViewById(R.id.allTasksButton);
+        final ImageButton settingsButton = findViewById(R.id.settingsButton);
 
         // wire up ADD TASKS BUTTON
-        Button goToAddTasksButton = findViewById(R.id.goToTaskActivityButton);
         goToAddTasksButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -67,9 +58,7 @@ public class MainActivity extends AppCompatActivity implements MyTaskRecyclerVie
                 MainActivity.this.startActivity(goToAddTaskActivity);
             }
         });
-
         // wire up ALL TASKS BUTTON
-        Button goToAllTasksButton = findViewById(R.id.allTasksButton);
         goToAllTasksButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -78,9 +67,7 @@ public class MainActivity extends AppCompatActivity implements MyTaskRecyclerVie
                 MainActivity.this.startActivity(goToAllTaskActivity);
             }
         });
-
         // wire up SETTINGS BUTTON
-        ImageButton settingsButton = findViewById(R.id.settingsButton);
         settingsButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -90,7 +77,21 @@ public class MainActivity extends AppCompatActivity implements MyTaskRecyclerVie
             }
         });
 
+        // Get data from AWS database and store in array
+        mAWSAppSyncClient = AWSAppSyncClient.builder()
+                .context(getApplicationContext())
+                .awsConfiguration(new AWSConfiguration(getApplicationContext()))
+                .build();
+        this.taskList = new ArrayList<Task>();
+        runQuery();
 
+        // save to local database
+        taskDb = Room.databaseBuilder(getApplicationContext(), TaskDatabase.class, "tasks").allowMainThreadQueries().build();
+
+        // set the tasks to the page
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        System.out.println(this.taskList.toString());
+        recyclerView.setAdapter(new MyTaskRecyclerViewAdapter(this.taskList, null, this));
     }
 
 
