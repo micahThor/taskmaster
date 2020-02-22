@@ -91,3 +91,17 @@ Ensure that you can tap on any one of the Tasks in the RecyclerView, and it will
 ![All Tasks Page of TaskMaster App](https://github.com/micahThor/taskmaster/blob/master/screenshots/Home%20page%20lab%2033.png)
 
 
+---
+# Lab 26 - 11 FEB 2020
+
+## Description
+Integrate an AWS Amplify and create a Dynamo Database to replace the local storage solution.
+
+## Change log
+- Integrated the Amplify dependency.  This allows me to sync my AWS account with my Android application
+
+## Screenshots
+![](https://github.com/micahThor/taskmaster/blob/master/screenshots/Home%20page%20lab%2034.png)
+![](https://github.com/micahThor/taskmaster/blob/master/screenshots/proof%20lab%2034.png)
+
+
