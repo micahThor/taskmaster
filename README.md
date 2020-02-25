@@ -104,4 +104,15 @@ Integrate an AWS Amplify and create a Dynamo Database to replace the local stora
 ![](https://github.com/micahThor/taskmaster/blob/master/screenshots/Home%20page%20lab%2034.png)
 ![](https://github.com/micahThor/taskmaster/blob/master/screenshots/proof%20lab%2034.png)
 
+---
 
+# Lab 36 - 25 FEB 2020
+
+## Description
+Integrate Cognito dependency to allow user logins
+
+## Change log
+Integrated Cognito dependency.  Users can log in/out.  Also usernames
+
+![Home Page of TaskMaster App](https://github.com/micahThor/taskmaster/blob/master/screenshots/lab36%20sign%20in.png)
+![Home Page of TaskMaster App](https://github.com/micahThor/taskmaster/blob/master/screenshots/lab36%20home%20with%20login.png)
