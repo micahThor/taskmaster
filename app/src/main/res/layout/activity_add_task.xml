@@ -105,4 +105,14 @@
             android:text="Complete" />
     </RadioGroup>
 
+    <Button
+        android:id="@+id/getPhotoButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:text="Get Photo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/taskStateRadioGroup"
+        app:layout_constraintTop_toBottomOf="@+id/taskDescriptionInput" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

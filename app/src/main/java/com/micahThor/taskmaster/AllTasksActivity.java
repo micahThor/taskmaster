@@ -66,7 +66,7 @@ public class AllTasksActivity extends AppCompatActivity implements MyTaskRecycle
                 taskList.clear();
 
                 for (ListTasksQuery.Item item : response.data().listTasks().items()) {
-                    Task t = new Task(item.title(), item.body(), item.state());
+                    Task t = new Task(item.title(), item.body(), item.state(), "dug");
                     taskList.add(t);
                 }
             }

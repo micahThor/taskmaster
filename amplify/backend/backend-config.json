@@ -9,7 +9,7 @@
 					"defaultAuthentication": {
 						"authenticationType": "API_KEY",
 						"apiKeyConfig": {
-							"description": "taskmasterkey",
+							"description": "taskmaster",
 							"apiKeyExpirationDays": "30"
 						}
 					}
@@ -23,6 +23,12 @@
 			"providerPlugin": "awscloudformation",
 			"dependsOn": [],
 			"customAuth": false
+		}
+	},
+	"storage": {
+		"s30a58fe17": {
+			"service": "S3",
+			"providerPlugin": "awscloudformation"
 		}
 	}
 }
