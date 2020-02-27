@@ -116,3 +116,15 @@ Integrated Cognito dependency.  Users can log in/out.  Also usernames
 
 ![Home Page of TaskMaster App](https://github.com/micahThor/taskmaster/blob/master/screenshots/lab36%20sign%20in.png)
 ![Home Page of TaskMaster App](https://github.com/micahThor/taskmaster/blob/master/screenshots/lab36%20home%20with%20login.png)
+
+---
+
+# Lab 37 - 38 - 27 FEB 2020
+
+## Description
+Integrate S3 dependency to allow users to save photos of their Tasks to AWS S3 storage
+
+## Change log
+Integrated Amplify Storage to allow users to save to AWS S3
+
+Screenshots to come
