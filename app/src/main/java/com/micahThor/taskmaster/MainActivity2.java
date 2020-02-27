@@ -24,55 +24,56 @@ import com.amazonaws.mobileconnectors.appsync.fetcher.AppSyncResponseFetchers;
 import com.apollographql.apollo.GraphQLCall;
 import com.apollographql.apollo.api.Response;
 import com.apollographql.apollo.exception.ApolloException;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Nonnull;
 
-public class MainActivity extends AppCompatActivity implements MyTaskRecyclerViewAdapter.taskOnClickListener {
+public class MainActivity2 extends AppCompatActivity implements MyTaskRecyclerViewAdapter.taskOnClickListener {
 
     private TaskDatabase taskDb;
     private AWSAppSyncClient mAWSAppSyncClient;
-    private List<Task> taskList= new ArrayList<>();
+    final List<Task> taskList = new ArrayList<>();
     final String TAG = "micah.mainactivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Log.i(TAG, "created now");
+
+        // page ELEMENTS
+        final RecyclerView recyclerView = findViewById(R.id.taskFragment);
+        recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity2.this));
+        final Button goToAddTasksButton = findViewById(R.id.goToTaskActivityButton);
+        final Button goToAllTasksButton = findViewById(R.id.allTasksButton);
+        final ImageButton signOutButton = findViewById(R.id.settingsButton);
 
         // wire up ADD TASKS BUTTON
-        final Button goToAddTasksButton = findViewById(R.id.goToTaskActivityButton);
         goToAddTasksButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                Intent goToAddTaskActivity = new Intent(MainActivity.this, AddTaskActivity.class);
-                MainActivity.this.startActivity(goToAddTaskActivity);
+                Intent goToAddTaskActivity = new Intent(MainActivity2.this, AddTaskActivity.class);
+                MainActivity2.this.startActivity(goToAddTaskActivity);
             }
         });
         // wire up ALL TASKS BUTTON
-        final Button goToAllTasksButton = findViewById(R.id.allTasksButton);
         goToAllTasksButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                Intent goToAllTaskActivity = new Intent(MainActivity.this, AllTasksActivity.class);
-                MainActivity.this.startActivity(goToAllTaskActivity);
+                Intent goToAllTaskActivity = new Intent(MainActivity2.this, AllTasksActivity.class);
+                MainActivity2.this.startActivity(goToAllTaskActivity);
             }
         });
         // wire up LOGOUT BUTTON
-        final ImageButton signOutButton = findViewById(R.id.settingsButton);
         signOutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AWSMobileClient.getInstance().signOut(SignOutOptions.builder().signOutGlobally(true).build(), new Callback<Void>() {
                     @Override
                     public void onResult(final Void result) {
-                        AWSMobileClient.getInstance().showSignIn(MainActivity.this, new Callback<UserStateDetails>() {
+                        AWSMobileClient.getInstance().showSignIn(MainActivity2.this, new Callback<UserStateDetails>() {
                             @Override
                             public void onResult(UserStateDetails result) {
                                 Log.d(TAG, "onResult: " + result.getUserState());
@@ -101,7 +102,7 @@ public class MainActivity extends AppCompatActivity implements MyTaskRecyclerVie
                 Log.i("INIT", "onResult: " + userStateDetails.getUserState());
                 if (userStateDetails.getUserState().equals(UserState.SIGNED_OUT)) {
                     // 'this' refers the the current active activity
-                    AWSMobileClient.getInstance().showSignIn(MainActivity.this, new Callback<UserStateDetails>() {
+                    AWSMobileClient.getInstance().showSignIn(MainActivity2.this, new Callback<UserStateDetails>() {
                         @Override
                         public void onResult(UserStateDetails result) {
                             Log.d(TAG, "onResult: " + result.getUserState());
@@ -113,56 +114,53 @@ public class MainActivity extends AppCompatActivity implements MyTaskRecyclerVie
                         }
                     });
                 }
+
             }
+
             @Override
             public void onError(Exception e) {
                 Log.e(TAG, "Initialization error.", e);
             }
         });
-    }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.i(TAG, "resumed now");
 
         // Get data from AWS database and store in array
+        mAWSAppSyncClient = AWSAppSyncClient.builder()
+                .context(getApplicationContext())
+                .awsConfiguration(new AWSConfiguration(getApplicationContext()))
+                .build();
         runQuery();
-        // Set user name
+        // set the tasks to the page
+        recyclerView.setAdapter(new MyTaskRecyclerViewAdapter(this.taskList, null, MainActivity2.this));
+
         TextView userNameTextView = findViewById(R.id.userNameTextView);
         String username = AWSMobileClient.getInstance().getUsername();
         userNameTextView.setText(username + "'s Tasks");
     }
 
     @Override
-    protected void onRestart() {
-        super.onRestart();
-        Log.i(TAG, "restarted now");
-    }
+    protected void onResume() {
+        super.onResume();
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        Log.i(TAG, "stopped now");
-    }
+        TextView userNameTextView = findViewById(R.id.userNameTextView);
+        String username = AWSMobileClient.getInstance().getUsername();
+        userNameTextView.setText(username + "'s Tasks");
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Log.i(TAG, "destroyed now");
-    }
-
-    public void runQuery() {
         mAWSAppSyncClient = AWSAppSyncClient.builder()
                 .context(getApplicationContext())
                 .awsConfiguration(new AWSConfiguration(getApplicationContext()))
                 .build();
-        mAWSAppSyncClient.query(ListTasksQuery.builder().build())
-                .responseFetcher(AppSyncResponseFetchers.CACHE_FIRST)
-                .enqueue(tasksCallback);
-        RecyclerView recyclerView = findViewById(R.id.taskFragment);
-        recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+
+        runQuery();
+        final RecyclerView recyclerView = findViewById(R.id.taskFragment);
+        recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity2.this));
         recyclerView.setAdapter(new MyTaskRecyclerViewAdapter(this.taskList, null, this));
+    }
+
+    public void runQuery() {
+        mAWSAppSyncClient.query(ListTasksQuery.builder().build())
+                .responseFetcher(AppSyncResponseFetchers.CACHE_AND_NETWORK)
+                .enqueue(tasksCallback);
     }
 
     private GraphQLCall.Callback<ListTasksQuery.Data> tasksCallback = new GraphQLCall.Callback<ListTasksQuery.Data>() {

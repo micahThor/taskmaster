@@ -55,7 +55,7 @@ public class MyTaskRecyclerViewAdapter extends RecyclerView.Adapter<MyTaskRecycl
                 String title = holder.mTitleView.getText().toString();
                 String description = holder.mDescriptionView.getText().toString();
                 String state = holder.mStateView.getText().toString();
-                Task t = new Task(title, description, state);
+                Task t = new Task(title, description, state, "dug");
 
                 clickListener.onClick(t);
             }
