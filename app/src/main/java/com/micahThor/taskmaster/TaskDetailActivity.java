@@ -3,11 +3,19 @@ package com.micahThor.taskmaster;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
+
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URI;
 
 public class TaskDetailActivity extends AppCompatActivity {
 
@@ -20,6 +28,17 @@ public class TaskDetailActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+
+        URI fileImage = new File("path_to_file").toURI();
+
+        ImageView taskImageView = findViewById(R.id.taskImageView);
+        // retrieve task TITLE from Intent
+        String fileNameText = getIntent().getStringExtra("imageFileName");
+
+        String urlS3 = "https://taskmastercb4138016fdf41c490d665e79a95ff3c115302-taskmaster.s3-us-west-2.amazonaws.com/" + fileNameText;
+
+        Picasso.get().load(urlS3).into(taskImageView);
 
         // retrieve task TITLE from Intent
         String headerText = getIntent().getStringExtra("title");

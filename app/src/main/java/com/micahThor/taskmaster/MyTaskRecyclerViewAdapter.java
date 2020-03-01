@@ -46,6 +46,8 @@ public class MyTaskRecyclerViewAdapter extends RecyclerView.Adapter<MyTaskRecycl
         holder.mTitleView.setText(mValues.get(position).getTitle());
         holder.mDescriptionView.setText(mValues.get(position).getBody());
         holder.mStateView.setText(mValues.get(position).getState());
+        holder.mImageUrlView.setText(mValues.get(position).getImageFileName());
+
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,7 +57,8 @@ public class MyTaskRecyclerViewAdapter extends RecyclerView.Adapter<MyTaskRecycl
                 String title = holder.mTitleView.getText().toString();
                 String description = holder.mDescriptionView.getText().toString();
                 String state = holder.mStateView.getText().toString();
-                Task t = new Task(title, description, state, "dug");
+                String imageUrl = holder.mImageUrlView.getText().toString();
+                Task t = new Task(title, description, state, imageUrl);
 
                 clickListener.onClick(t);
             }
@@ -72,6 +75,7 @@ public class MyTaskRecyclerViewAdapter extends RecyclerView.Adapter<MyTaskRecycl
         public final TextView mTitleView;
         public final TextView mDescriptionView;
         public final TextView mStateView;
+        public final TextView mImageUrlView;
         public Task mItem;
 
         public ViewHolder(View view) {
@@ -80,6 +84,7 @@ public class MyTaskRecyclerViewAdapter extends RecyclerView.Adapter<MyTaskRecycl
             mTitleView = (TextView) view.findViewById(R.id.taskTitle);
             mDescriptionView = (TextView) view.findViewById(R.id.taskDescription);
             mStateView = (TextView) view.findViewById(R.id.taskState);
+            mImageUrlView = (TextView) view.findViewById(R.id.imageUrlTextView);
         }
 
         @Override
