@@ -13,14 +13,14 @@ public class Task {
     private String title;
     private String body;
     private String state;
-    private String imageFilePath;
+    private String imageFileName;
 
     @Ignore
-    public Task(String title, String body, String state, String imageFilePath) {
+    public Task(String title, String body, String state, String imageFileName) {
         this.title = title;
         this.body = body;
         this.state = state;
-        this.imageFilePath = imageFilePath;
+        this.imageFileName = imageFileName;
     }
 
     public Task() {
@@ -41,8 +41,8 @@ public class Task {
 
     public void setId(long id) { this.id = id; }
 
-    public void setImageFilePath(String imageFilePath) {
-        this.imageFilePath = imageFilePath;
+    public void setImageFileName(String imageFileName) {
+        this.imageFileName = imageFileName;
     }
 
     public String getTitle() {
@@ -57,8 +57,8 @@ public class Task {
         return state;
     }
 
-    public String getImageFilePath() {
-        return imageFilePath;
+    public String getImageFileName() {
+        return imageFileName;
     }
 
     public long getId() { return id; }

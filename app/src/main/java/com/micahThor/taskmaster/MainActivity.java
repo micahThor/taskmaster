@@ -34,8 +34,7 @@ import javax.annotation.Nonnull;
 public class MainActivity extends AppCompatActivity implements MyTaskRecyclerViewAdapter.taskOnClickListener {
 
     private TaskDatabase taskDb;
-    private AWSAppSyncClient mAWSAppSyncClient;
-    private List<Task> taskList= new ArrayList<>();
+    private List<Task> taskList;
     final String TAG = "micah.mainactivity";
 
     @Override
@@ -43,6 +42,14 @@ public class MainActivity extends AppCompatActivity implements MyTaskRecyclerVie
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Log.i(TAG, "created now");
+
+        taskList = new ArrayList<>();
+        // Get data from AWS database and store in array
+        runQuery();
+        // Set user name
+        TextView userNameTextView = findViewById(R.id.userNameTextView);
+        String username = AWSMobileClient.getInstance().getUsername();
+        userNameTextView.setText(username + "'s Tasks");
 
         // wire up ADD TASKS BUTTON
         final Button goToAddTasksButton = findViewById(R.id.goToTaskActivityButton);
@@ -94,7 +101,7 @@ public class MainActivity extends AppCompatActivity implements MyTaskRecyclerVie
             }
         });
 
-        // log in on page load
+        // log in on page load (if user is not already logged in)
         AWSMobileClient.getInstance().initialize(getApplicationContext(), new Callback<UserStateDetails>() {
             @Override
             public void onResult(UserStateDetails userStateDetails) {
@@ -137,6 +144,12 @@ public class MainActivity extends AppCompatActivity implements MyTaskRecyclerVie
     @Override
     protected void onRestart() {
         super.onRestart();
+        // Get data from AWS database and store in array
+        runQuery();
+        // Set user name
+        TextView userNameTextView = findViewById(R.id.userNameTextView);
+        String username = AWSMobileClient.getInstance().getUsername();
+        userNameTextView.setText(username + "'s Tasks");
         Log.i(TAG, "restarted now");
     }
 
@@ -153,16 +166,16 @@ public class MainActivity extends AppCompatActivity implements MyTaskRecyclerVie
     }
 
     public void runQuery() {
-        mAWSAppSyncClient = AWSAppSyncClient.builder()
+        AWSAppSyncClient mAWSAppSyncClient = AWSAppSyncClient.builder()
                 .context(getApplicationContext())
                 .awsConfiguration(new AWSConfiguration(getApplicationContext()))
                 .build();
         mAWSAppSyncClient.query(ListTasksQuery.builder().build())
-                .responseFetcher(AppSyncResponseFetchers.CACHE_FIRST)
+                .responseFetcher(AppSyncResponseFetchers.CACHE_AND_NETWORK)
                 .enqueue(tasksCallback);
         RecyclerView recyclerView = findViewById(R.id.taskFragment);
         recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
-        recyclerView.setAdapter(new MyTaskRecyclerViewAdapter(this.taskList, null, this));
+        recyclerView.setAdapter(new MyTaskRecyclerViewAdapter(this.taskList, null, MainActivity.this));
     }
 
     private GraphQLCall.Callback<ListTasksQuery.Data> tasksCallback = new GraphQLCall.Callback<ListTasksQuery.Data>() {
@@ -173,7 +186,7 @@ public class MainActivity extends AppCompatActivity implements MyTaskRecyclerVie
                 taskList.clear();
 
                 for (ListTasksQuery.Item item : response.data().listTasks().items()) {
-                    Task t = new Task(item.title(), item.body(), item.state(), "dugg");
+                    Task t = new Task(item.title(), item.body(), item.state(), item.imageFileName());
                     taskList.add(t);
                 }
             }
@@ -191,6 +204,7 @@ public class MainActivity extends AppCompatActivity implements MyTaskRecyclerVie
         intent.putExtra("title", t.getTitle());
         intent.putExtra("description", t.getBody());
         intent.putExtra("state", t.getState());
+        intent.putExtra("imageFileName", t.getImageFileName());
         this.startActivity(intent);
     }
 }
