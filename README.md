@@ -128,3 +128,7 @@ Integrate S3 dependency to allow users to save photos of their Tasks to AWS S3 s
 Integrated Amplify Storage to allow users to save to AWS S3
 
 Screenshots to come
+![](https://github.com/micahThor/taskmaster/blob/master/screenshots/s3%201.png)
+![](https://github.com/micahThor/taskmaster/blob/master/screenshots/s3%202.png)
+![](https://github.com/micahThor/taskmaster/blob/master/screenshots/s3%203.png)
+![](https://github.com/micahThor/taskmaster/blob/master/screenshots/s3%204.png)
