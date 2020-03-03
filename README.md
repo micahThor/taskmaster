@@ -132,3 +132,21 @@ Screenshots to come
 ![](https://github.com/micahThor/taskmaster/blob/master/screenshots/s3%202.png)
 ![](https://github.com/micahThor/taskmaster/blob/master/screenshots/s3%203.png)
 ![](https://github.com/micahThor/taskmaster/blob/master/screenshots/s3%204.png)
+
+---
+# Lab 40 - 2 March 2020
+
+## Description
+When a new task is created within a team, alert all users who are a part of that team about that new task.
+
+There are several steps involved in allowing this to work:
+
+Store which team a user is part of in the cloud
+Add a Lambda trigger on task creation
+Use SNS to send a notification as part of that Lambda
+
+## Change log
+Integrated Notifications using FCM and Pintpoint
+
+## Screenshots
+![Home Page of TaskMaster App](https://github.com/micahThor/taskmaster/blob/master/screenshots/notification%20lab40.png)
