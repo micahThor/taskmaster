@@ -150,3 +150,15 @@ Integrated Notifications using FCM and Pintpoint
 
 ## Screenshots
 ![Home Page of TaskMaster App](https://github.com/micahThor/taskmaster/blob/master/screenshots/notification%20lab40.png)
+
+---
+# Lab 41 - 3 MARCH 2020
+
+## Description
+Add an intent filter to your application such that a user can hit the “share” button on an image in another application, choose TaskMaster as the app to share that image with, and be taken directly to the Add a Task activity with that image pre-selected.
+
+## Change log
+Added intent filter to AddTaskActivity.java.  Intent filter sends along a photo to be attached to a new task instance.
+
+## Screenshots
+![](https://github.com/micahThor/taskmaster/blob/master/screenshots/intent%20filter.png)
