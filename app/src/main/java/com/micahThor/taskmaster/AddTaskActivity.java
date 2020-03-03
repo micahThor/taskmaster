@@ -78,6 +78,15 @@ public class AddTaskActivity extends AppCompatActivity {
         final ImageView imageView = findViewById(R.id.taskImagePreview);
         final Toast resultToast = Toast.makeText(getApplicationContext(), "result", Toast.LENGTH_SHORT);
 
+        Intent intent = getIntent();
+        String str = intent.getType();
+
+        // Figure out what to do based on the intent type
+        if (str != null && intent.getType().contains("image/")) {
+            imageUri = (Uri) intent.getParcelableExtra(Intent.EXTRA_STREAM);
+            imageView.setImageURI(imageUri);
+        }
+
         // initialize AWS dynamo db and local databases
         mAWSAppSyncClient = AWSAppSyncClient.builder()
                 .context(getApplicationContext())
